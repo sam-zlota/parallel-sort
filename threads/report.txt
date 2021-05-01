@@ -1,0 +1,36 @@
+Local Machine Info:
+
+	Operating System: Debian GNU/Linux 10
+	Model Name: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+	Number of Processor Cores: 4
+	Amount of RAM: 4041172 kB (approx. 4 gB)
+
+Remote Machine Info:
+
+	Operating System: CentOS Linux 7i
+	Model Name: Intel(R) Xeon(R) Gold 5118 CPU @ 2.30GHz
+	Number of Processor Cores: 48
+	Amount of RAM: 196294924 kB (approx. 196 gB)	
+
+	+------------+---------------+-----------+
+	|    Test    |  Median Speed |  Speedup  |
+	+------------+---------------+-----------+
+	| Local (1)  |     9.79      |   1.00    |
+	+            +               +           +
+	| Local (4)  |     6.48      |   1.51    |
+	+            +               +           +
+	| Local (8)  |     3.01      |   3.25    |
+	+------------+---------------+-----------+
+	| Remote (1) |     16.9      |   1.00    |
+	+            +               +           +
+	| Remote (4) |     9.31      |   1.81    |
+	+            +               +           +
+	| Remote (8) |     5.89      |   2.87    |
+	+------------+---------------+-----------+
+	
+	The most notable takeaway from this experiment is that the local machine outperformed the remote machine consistenly with by roughly a factor of 2.Some other interesting observations is that the local machine speedup for 8 threads was more than 3x. The best time for local machine with 8 threads was 2.5 seconds which is an astronomical speed up of nearly 4x. The remote machine, although fast, did not show such extreme speed ups. Also, it is important to note that the thread version did not perform much better if at all than the proces/mmap verion. The speedups and absolute times are generally worse for the thread version.
+
+	
+
+
+

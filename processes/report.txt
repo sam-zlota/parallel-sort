@@ -1,0 +1,37 @@
+Local Machine Info:
+
+	Operating System: Debian GNU/Linux 10
+	Model Name: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+	Number of Processor Cores: 4
+	Amount of RAM: 4041172 kB (approx. 4 gB)
+
+Remote Machine Info:
+
+	Operating System: CentOS Linux 7i
+	Model Name: Intel(R) Xeon(R) Gold 5118 CPU @ 2.30GHz
+	Number of Processor Cores: 48
+	Amount of RAM: 196294924 kB (approx. 196 gB)	
+
+	+------------+---------------+-----------+
+	|    Test    |  Median Speed |  Speedup  |
+	+------------+---------------+-----------+
+	| Local (1)  |     9.80      |   1.00    |
+	+            +               +           +
+	| Local (4)  |     4.16      |   2.39    |
+	+            +               +           +
+	| Local (8)  |     3.24      |   3.02    |
+	+------------+---------------+-----------+
+	| Remote (1) |     15.57     |   1.00    |
+	+            +               +           +
+	| Remote (4) |     7.20      |   2.16    |
+	+            +               +           +
+	| Remote (8) |     5.74      |   2.71    |
+	+------------+---------------+-----------+
+	
+
+
+	The most notable finding from this experiment is that the local machine performed better in all cases. With 8 processes, the real time was only 3.24 seconds in comparison to 5.74 seconds on the remote machine. On both the local and the remote machine, as the number of processes grew from 1 to 4 to 8, the times roughly dropped by a factor of two. It should be noted that the times did not improve on the local machine going from 8 to 16 processes, but there was a notable improvement going from 8 to 16 processes on the remote server. Nonetheless, in either case, the marginal speedup decreased with more and more processes. 
+	I think these findings are interesting because there are more cores and more RAM on the remote server. And, the remote server has roughly the same clock speed as the local machine. I think the most reasonable explanation for this is the fact that the resources are not shared on the local machine but are shared quite heavily on the remote machine.
+
+
+	According to both laws there is a theoretical limit to the parallel speedup of a given process because there will always be part of the process that does not benefit from improved resources. This can be seen in the values above that show that the marginal speedup decreases as more the amount of processes increases. I think then that in order to determine whether an algorithm is good in terms of how well it scales to more processes, we must consider what proportion of the program benefits vs. what proportion does not benefit from more processes. I think that sample sort is a good program in this sense because the bulk of the word can be parallelized. The work that benefits from improved resources is the sorting which happens to be the most intensive. On the the remote server I was able to get a nearly 4x speedup going from 1 to 32 processes. I guess, we must consider also ratio of speedup to additional processes, which in this case is quite large and not optimal. In conclusion, I think sample sort is mediocre, not amazing, but defintely not the best.
